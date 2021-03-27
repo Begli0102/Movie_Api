@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan= require('morgan');
+
 const app = express();
 
 
@@ -65,23 +66,25 @@ let topTenMovies=[
     year:2003
   },
 ]
+app.use(morgan('common'));
 
-app.get('/movies', (req, res) => {
-  res.json(topTenMovies);
-});
-
-app.get('/', (req, res) => {
-  res.send('Welcome to the world of movies!');
-});
 
 app.use(express.static('public'));
 
-app.use(morgan('common'));
+app.get('/', (req, res) => {
+  res.send('<h1>Welcome to the world of movies!</h1>');
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something went wrong!');
 });
+
+
+app.get('/movies', (req, res) => {
+  res.json(topTenMovies);
+});
+
 
 app.listen(8080, () => {
   console.log('Your app is listening on port 8080.');
