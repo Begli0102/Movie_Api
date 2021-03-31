@@ -1,9 +1,10 @@
 const express = require('express');
 const morgan= require('morgan');
-
+const bodyParser=require('body-parser');
+const uuid=require('uuid');
 const app = express();
 
-
+app.use(bodyParser.json());
 
 let topTenMovies=[
   {
@@ -71,19 +72,56 @@ app.use(morgan('common'));
 
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  res.send('<h1>Welcome to the world of movies!</h1>');
-});
+
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something went wrong!');
 });
 
+// GET method
 
-app.get('/movies', (req, res) => {
+app.get('/topTenMovies', (req, res, next) => {
   res.json(topTenMovies);
 });
+
+
+app.get('/topTenMovies/:title', (req, res) => {
+    res.json(req.params.title)
+
+  });
+
+  app.get('/topTenMovies/:director', (req, res) => {
+      res.json(req.params.director)
+    });
+
+    app.get('/topTenMovies/:year', (req, res) => {
+        res.send(req.params.year)
+      });
+
+// POST mehod
+app.post('/users',(req, res)=>{
+  res.send('The user has been added successfully');
+})
+
+app.post('/topTenMovies',(req, res)=>{
+  res.send('The favourite movie has been added successfully');
+})
+
+// PUT method
+
+app.put('/users',(req,res)=>{
+  res.send('The user has been updated successfully');
+})
+
+//Delete method
+app.delete('/topTenMovies',(req,res)=>{
+  res.send('The movie has been deleted');
+})
+
+app.delete('/users',(req,res)=>{
+  res.send('The user has been deleted');
+})
 
 
 app.listen(8080, () => {
