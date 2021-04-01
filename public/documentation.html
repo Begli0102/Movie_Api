@@ -3,12 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>Movie-API</title>
+    <link href="../css/styles.css" rel="stylesheet"  type="text/css">
   </head>
   <body>
     <h1>Documentation</h1>
-    <p>
-  Documentation page will be developed in the near future
-      </p>
+
       <table>
         <tr>
           <th>Endpoint</th>
@@ -20,52 +19,52 @@
 
         <!-- Get method -->
         <tr>
-          <td>topTenMovies</td>
+          <td>/movies</td>
           <td>GET</td>
           <td>NONE</td>
           <td>JSON</td>
           <td>Get a list of movies</td>
         </tr>
         <tr>
-          <td>topTenMovies/[title]</td>
+          <td>/movies/:title</td>
           <td>GET</td>
           <td>NONE</td>
           <td>JSON</td>
           <td>Get a data of a single movie</td>
         </tr>
         <tr>
-          <td>topTenMovies/[title]/director</td>
+          <td>/movies/:director</td>
           <td>GET</td>
           <td>NONE</td>
           <td>JSON</td>
-          <td>Get a data of a director</td>
+          <td>Get a data of a single movie</td>
         </tr>
         <tr>
-          <td>topTenMovies/[title]/year</td>
+          <td>/movies/:year</td>
           <td>GET</td>
           <td>NONE</td>
           <td>JSON</td>
-          <td>Get a data of a title's year</td>
+          <td>Get a data of a single movie</td>
         </tr>
 
       <!-- Post method -->
       <tr>
-          <td>/topTenMovies</td>
+          <td>/movies</td>
           <td>POST</td>
           <td>JSON <br />
              <span>
            {
-             'topTenMovies': {
-               'title': '',
-               'director': '',
-                 'year': '',
+             'movies': {<br />
+               'title': '',<br />
+               'director': '',<br />
+                 'year': '',<br />
                }
              }
          </span>
        </td>
        <td>Text concerning with the status</td>
-       <td>Allow users to add a movie to their
-         list of favorites (showing only a text
+       <td>Allow users to add a movie to their<br/>
+         list of favorites (showing only a text<br/>
           that a movie has been added)</td>
               </tr>
 
@@ -75,12 +74,12 @@
             <td>JSON <br />
               <span>
                 {
-                  'id': 'id',
-                  'username': '[username]',
-                  'password': '[password]'
+                  'id': 'id',<br />
+                  'username': '[username]',<br />
+                  'password': '[password]'<br />
                   'info': {
-                    'firstName': '[firstName]',
-                    'lastName': '[lastName]'
+                    'firstName': '[firstName]',<br />
+                    'lastName': '[lastName]'<br />
                   }
                 }
               </span>
@@ -92,42 +91,30 @@
 
 <!-- Put method -->
           <tr>
-            <td>/users/:username</td>
+            <td>/users/:email</td>
             <td>PUT</td>
-            <td>None</td>
+            <td>NONE</td>
             <td>Text concerning with the status</td>
-            <td>Allow user to update username</td>
+            <td>Allow user to update email</td>
           </tr>
 
 <!-- delete method -->
         <tr>
-          <td>/topTenMovies</td>
+          <td>/movies/:favouriteMovie</td>
    <td>DELETE</td>
-   <td>JSON <br />
-     <span>
-       {
-         ...
-       }
-     </span>
-   </td>
+   <td>NONE </td>
    <td>Text relaying status</td>
-   <td>Allow users to remove a movie
-      from their list of favorites (showing
+   <td>Allow users to remove a movie<br />
+      from their list of favorites (showing<br/>
       only a text that a movie has been removed)</td>
         </tr>
 
         <tr>
-          <td>/users</td>
+          <td>/users/:email</td>
     <td>DELETE</td>
-    <td>JSON <br />
-      <span>
-        {
-          ...
-        }
-      </span>
-    </td>
     <td>NONE</td>
-    <td>Allow existing users to deregister (showing
+    <td>NONE</td>
+    <td>Allow existing users to deregister (showing<br />
       only a text that a user email has been removed)</td>
         </tr>
       </table>

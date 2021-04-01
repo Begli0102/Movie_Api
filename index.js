@@ -2,11 +2,12 @@ const express = require('express');
 const morgan= require('morgan');
 const bodyParser=require('body-parser');
 const uuid=require('uuid');
+
 const app = express();
 
 app.use(bodyParser.json());
 
-let topTenMovies=[
+let movies=[
   {
     title:'The Shawshank Redemption',
     director: 'Frank Darabont',
@@ -72,7 +73,9 @@ app.use(morgan('common'));
 
 app.use(express.static('public'));
 
-
+// app.get('/documentation', (req, res) => {
+//   res.sendFile('public/documentation.html', { root: __dirname });
+// });
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -81,22 +84,22 @@ app.use((err, req, res, next) => {
 
 // GET method
 
-app.get('/topTenMovies', (req, res, next) => {
-  res.json(topTenMovies);
+app.get('/movies', (req, res, next) => {
+  res.json(movies);
 });
 
 
-app.get('/topTenMovies/:title', (req, res) => {
-    res.json(req.params.title)
+app.get('/movies/:title', (req, res) => {
+      res.json(req.params.title )
 
   });
 
-  app.get('/topTenMovies/:director', (req, res) => {
-      res.json(req.params.director)
+  app.get('/movies/:director', (req, res) => {
+      res.json(req.params.director )
     });
 
-    app.get('/topTenMovies/:year', (req, res) => {
-        res.send(req.params.year)
+    app.get('/movies/:year', (req, res) => {
+        res.json(req.params.year  )
       });
 
 // POST mehod
@@ -104,23 +107,23 @@ app.post('/users',(req, res)=>{
   res.send('The user has been added successfully');
 })
 
-app.post('/topTenMovies',(req, res)=>{
-  res.send('The favourite movie has been added successfully');
+app.post('/movies',(req, res)=>{
+  res.send('The movie has been added successfully');
 })
 
 // PUT method
 
-app.put('/users',(req,res)=>{
-  res.send('The user has been updated successfully');
+app.put('/users/:email',(req,res)=>{
+  res.send('The user\'s email has been updated successfully');
 })
 
 //Delete method
-app.delete('/topTenMovies',(req,res)=>{
-  res.send('The movie has been deleted');
+app.delete('/movies/:favouriteMovie',(req,res)=>{
+  res.send('The favourite movie has been deleted');
 })
 
-app.delete('/users',(req,res)=>{
-  res.send('The user has been deleted');
+app.delete('/users/:email',(req,res)=>{
+  res.send('The user\'s email has been deleted');
 })
 
 
