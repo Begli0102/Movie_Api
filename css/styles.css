@@ -1,0 +1,22 @@
+body{
+  background-color:lightgray;
+
+}
+table{
+    text-align: center;
+
+    padding: 1rem;
+}
+table tr{
+align-items:center;
+  
+  font-size: 15px;
+
+}
+table td{
+  padding: 1rem;
+
+}
+table th{
+    text-transform:uppercase;
+}
