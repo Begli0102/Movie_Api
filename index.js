@@ -13,8 +13,6 @@ const Models = require('./models.js');
 const Movies= Models.Movie;
 const Users = Models.User;
 
- // mongoose.connect(mongodb+srvmyFlixDBadmin://kakabalov4012@myflixdb.bs4xi.mongodb.net/myFlixDB?retryWrites=true&w=majority{ useNewUrlParser: true, useUnifiedTopology: true });
-
  mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
@@ -99,7 +97,8 @@ app.post('/users',
  check('Username', 'Username is required').isLength({min: 5}),
  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
  check('Password', 'Password is required').not().isEmpty(),
- check('Email', 'Email does not appear to be valid').isEmail()
+ check('Email', 'Email does not appear to be valid').isEmail(),
+ check("Birthday", 'Birthday doesn\'t appear to be valid').isDate({format: "YYYY-MM-DD"})
 ], (req, res) => {
 
 // check the validation object for errors
