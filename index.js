@@ -13,8 +13,9 @@ const Models = require('./models.js');
 const Movies= Models.Movie;
 const Users = Models.User;
 
+ // mongoose.connect(mongodb+srvmyFlixDBadmin://kakabalov4012@myflixdb.bs4xi.mongodb.net/myFlixDB?retryWrites=true&w=majority{ useNewUrlParser: true, useUnifiedTopology: true });
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 
