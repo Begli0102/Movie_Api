@@ -10,6 +10,7 @@ const { check, validationResult } = require('express-validator');
 const mongoose = require("mongoose");
 const Models = require('./models.js');
 
+
 const Movies= Models.Movie;
 const Users = Models.User;
 
@@ -24,8 +25,8 @@ let auth = require('./auth')(app);
 app.use(cors());
 
 
-app.get('/',(req, res)=>{
-  res.send('Welcome to MyFlix!');
+app.get('/', (req, res) => {
+  res.sendFile('/public/documentation.html');
 });
 
 //Returnig all movies
