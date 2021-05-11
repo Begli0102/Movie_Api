@@ -23,7 +23,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
-let auth = require('./auth')(app);
 let allowedOrigins = ['http://localhost:8080','http://localhost:1234', 'http://testsite.com'];
 
  app.use(cors({origin: (origin, callback) => {
@@ -37,6 +36,7 @@ let allowedOrigins = ['http://localhost:8080','http://localhost:1234', 'http://t
 }
 ));
 
+ require('./auth')(app);
 
 app.get('/', (req, res) => {
   res.sendFile('/public/documentation.html');
