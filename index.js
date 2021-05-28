@@ -196,19 +196,17 @@ app.put("/users/:username",
 
 
 //Adding user a favourite movie
-app.put('/users/:username/movies/:movieId',passport.authenticate('jwt',{session:false}), (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.username }, {
+app.put('/users/:username/movies/:movieId', passport.authenticate('jwt', {session: false}), ( req, res ) =>{ 
+  users.findOneAndUpdate({ Username: req.params.username }, {
      $addToSet: { FavoriteMovies: req.params.movieId }
    },
-   { new: true }, // This line makes sure that the updated document is returned
-  (err, updatedUser) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    } else {
-      res.json(updatedUser);
-    }
-  });
+    { new: true }) // This line makes sure that the updated document is returned
+    .then( updatedUser => {
+      if( !updatedUser ) return res.status(400).send({'message': 'Could not find user...'})
+      res.status(200).json(updatedUser)
+    }).catch( err => {
+      res.status(500).send(`Error: ${ err.stack }`)
+    })
 });
 
 // Deleting username's favourite movie
