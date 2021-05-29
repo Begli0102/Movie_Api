@@ -197,7 +197,7 @@ app.put("/users/:username",
 
 //Adding user a favourite movie
 app.put('/users/:username/movies/:movieId', passport.authenticate('jwt', {session: false}), ( req, res ) =>{ 
-  users.findOneAndUpdate({ Username: req.params.username }, {
+  Users.findOneAndUpdate({ Username: req.params.username }, {
      $addToSet: { FavoriteMovies: req.params.movieId }
    },
     { new: true }) // This line makes sure that the updated document is returned
