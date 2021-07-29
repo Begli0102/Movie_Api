@@ -112,11 +112,11 @@ app.get('/users',passport.authenticate('jwt',{session:false}), (req, res) => {
 // Adding a new user
 app.post('/users',
 [
- check('Username', 'Username must be at least 5 characters').isLength({min: 5}),
+ check('Username', 'Username must be at least 5 characters').isLength({min: 6}),
  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
  check('Password', 'Password is required').not().isEmpty(),
  check('Email', 'Email does not appear to be valid').isEmail(),
-check("Birthday", 'Birthday doesn\'t appear to be valid').isDate({format:"YYYY-MM-DD"})
+check("Birthday", 'Birthday doesn\'t appear to be valid').isDate({format:"DD-MM-YYYY"})
 ], (req, res) => {
 
 // check the validation object for errors
@@ -156,11 +156,11 @@ check("Birthday", 'Birthday doesn\'t appear to be valid').isDate({format:"YYYY-M
 //Updating user's data
 
 app.put("/users/:username",
-[check('Username', 'Username is required').isLength({min: 5}),
+[check('Username', 'Username is required').isLength({min: 6}),
  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
  check('Password', 'Password is required').not().isEmpty(),
  check('Email', 'Email does not appear to be valid').isEmail(),
- check("Birthday", 'Birthday doesn\'t appear to be valid').isDate({format: "YYYY-MM-DD"})
+ check("Birthday", 'Birthday doesn\'t appear to be valid').isDate({format: "DD-MM-YYYY"})
 ],(req, res) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
