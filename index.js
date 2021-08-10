@@ -24,7 +24,8 @@ app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
 let allowedOrigins = ['http://localhost:8080','http://localhost:1234',
- 'http://testsite.com','https://movies0123.netlify.app','http://localhost:65346'];
+ 'http://testsite.com','https://movies0123.netlify.app',
+ 'http://localhost:65346','http://localhost:4200'];
 
  app.use(cors({origin: (origin, callback) => {
     if(!origin) return callback(null, true);
@@ -83,6 +84,7 @@ app.get("/movies/genre/:name",passport.authenticate('jwt',{session:false}), (req
     })
 });
 
+
 //  return movies according to director
 app.get("/movies/directors/:name",passport.authenticate('jwt',{session:false}),(req, res) => {
     let director = req.params.name;
@@ -95,6 +97,7 @@ app.get("/movies/directors/:name",passport.authenticate('jwt',{session:false}),(
         res.status(500).send("Error 500: " + error)
     })
 });
+
 
 //returning all users
 app.get('/users',passport.authenticate('jwt',{session:false}), (req, res) => {
@@ -205,6 +208,7 @@ app.get('/users/:username', passport.authenticate('jwt',{session:false}), (req, 
      res.status(500).send('Error: ' + err);
    });
 });
+
 
 //Adding user a favourite movie
 app.put('/users/:username/movies/:movieId', passport.authenticate('jwt', {session: false}), ( req, res ) =>{ 
