@@ -14,7 +14,10 @@ This is an API which provides users with access to information about movies, gen
 - To get all users `app.get('/users')`
 - To add a user `app.post('/users')`
 - To update a user information `app.put("/users/:username")`
-- 
+- To get a single user `app.get('/users/:username')`
+- To add a movie to favourite `app.put('/users/:username/movies/:movieId')`
+- To delete a movie from favourite `app.delete("/users/:username/movies/:movieId")`
+- To delete a user `app.delete('/users/:username')`
 
 ## Features
 
