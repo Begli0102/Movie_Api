@@ -4,7 +4,7 @@
 
 This is an API which provides users with access to information about movies, genres and directors. Users are able to register/un-register, update their user profile, and create a list of their favorite movies.
 
-## API
+## Endpoints
 
 ### A full list of endpoints are below:
 - To get all movies `app.get('/movies')`
