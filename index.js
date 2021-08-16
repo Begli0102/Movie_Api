@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
 let allowedOrigins = ['http://localhost:8080','http://localhost:1234',
- 'http://testsite.com','https://movies0123.netlify.app',
+ 'http://testsite.com','myflix1.netlify.app',
  'http://localhost:65346','http://localhost:4200'];
 
  app.use(cors({origin: (origin, callback) => {
@@ -40,11 +40,21 @@ let allowedOrigins = ['http://localhost:8080','http://localhost:1234',
 
  require('./auth')(app);
 
+ 
 app.get('/', (req, res) => {
   res.sendFile('/public/documentation.html');
 });
 
-//Returnig all movies
+/**
+ * This method makes a call to the movies endpoint,
+ * authenticates the user using passport and jwt
+ * and returns an array of movies objects.
+ * @method getMovies
+ * @param {string} moviesEndpoint - https://myflix01025.herokuapp.com/movies
+ * @param {func} passportAuthentication - Authenticates JavaScript Web Token using the passport node package.
+ * @param {func} callback - Uses Movies schema to find list of movies.
+ * @returns {Array} - Returns array of movie objects.
+ */
 app.get('/movies',passport.authenticate('jwt', { session: false }),(req, res) => {
 
   Movies.find().then((movies)=>{
@@ -57,7 +67,16 @@ app.get('/movies',passport.authenticate('jwt', { session: false }),(req, res) =>
   });
 });
 
-//  return movies according to title
+/**
+ * This method makes a call to the movie title endpoint,
+ * authenticates the user using passport and jwt
+ * and returns a single movies object.
+ * @method getMovieByTitle
+ * @param {string} movieEndpoint - https://myflix01025.herokuapp.com/movies:title
+ * @param {func} passportAuthentication - Authenticates JavaScript Web Token using the passport node package.
+ * @param {func} callback - Uses Movies schema to find one movie by title.
+ * @returns {Object} - Returns single movie object.
+ */
 
 app.get('/movies/:title',passport.authenticate('jwt',{session:false}), (req, res) => {
   Movies.findOne({Title :req.params.title })
@@ -70,8 +89,16 @@ app.get('/movies/:title',passport.authenticate('jwt',{session:false}), (req, res
     });
 });
 
-//  return movies according to genre
-
+/**
+ * This method makes a call to the movie genre name endpoint,
+ * authenticates the user using passport and jwt
+ * and returns a genre object.
+ * @method getGenreByName
+ * @param {string} genreEndpoint - https://myflix01025.herokuapp.com/movies/genres/:name
+ * @param {func} passportAuthentication - Authenticates JavaScript Web Token using the passport node package.
+ * @param {func} callback - Uses Movies schema to find genre by name.
+ * @returns {Object} - Returns genre info object.
+ */
 app.get("/movies/genre/:name",passport.authenticate('jwt',{session:false}), (req, res) => {
 
     Movies.findOne({"Genre.Name" :req.params.name}).then((genreName) =>
@@ -85,7 +112,16 @@ app.get("/movies/genre/:name",passport.authenticate('jwt',{session:false}), (req
 });
 
 
-//  return movies according to director
+
+ /**This method makes a call to the movie director name endpoint,
+* authenticates the user using passport and jwt
+* and returns a director object.
+* @method getDirectorByName
+* @param {string} directorEndpoint - https://myflix01025.herokuapp.com/movies/directors/:name
+* @param {func} passportAuthentication - Authenticates JavaScript Web Token using the passport node package.
+* @param {func} callback - Uses Movies schema to find director by name.
+* @returns {Object} - Returns director info object.
+*/
 app.get("/movies/directors/:name",passport.authenticate('jwt',{session:false}),(req, res) => {
     let director = req.params.name;
     Movies.findOne({"Director.Name" : director}).then((directorName) =>
@@ -99,7 +135,15 @@ app.get("/movies/directors/:name",passport.authenticate('jwt',{session:false}),(
 });
 
 
-//returning all users
+/**
+* This method makes a call to the users endpoint,
+* validates the object sent through the request
+* and creates a user object.
+* @method getUser
+* @param {string} usersEndpoint - https://myflix01025.herokuapp.com/users
+* @param {Array} expressValidator - Validate form input using the express-validator package.
+* @param {func} callback - Uses Users schema to register user.
+ */
 app.get('/users',passport.authenticate('jwt',{session:false}), (req, res) => {
   Users.find()
     .then((users) => {
@@ -112,7 +156,15 @@ app.get('/users',passport.authenticate('jwt',{session:false}), (req, res) => {
 });
 
 
-// Adding a new user
+/**
+* This method makes a call to the users endpoint,
+* validates the object sent through the request
+* and creates a user object.
+* @method addUser
+* @param {string} usersEndpoint - https://myflix01025.herokuapp.com/users
+* @param {Array} expressValidator - Validate form input using the express-validator package.
+* @param {func} callback - Uses Users schema to register user.
+ */
 app.post('/users',
 [
  check('Username', 'Username must be at least 5 characters').isLength({min: 6}),
@@ -156,7 +208,13 @@ check("Birthday", 'Birthday doesn\'t appear to be valid').isDate({format:"YYYY-M
    });
 });
 
-//Updating user's data
+/**
+* Update a user's info, by username.
+* @method updateUser
+* @param {string} userNameEndpoint - https://myflix01025.herokuapp.com/users/:username
+* @param {Array} expressValidator - Validate form input using the express-validator package.
+* @param {func} callback - Uses Users schema to update user's info by username.
+ */
 
 app.put("/users/:username",
 [check('Username', 'Username is required').isLength({min: 6}),
@@ -197,7 +255,15 @@ app.put("/users/:username",
     })
 });
 
-// Get a single user
+/**
+* This method makes a call to the users endpoint,
+* validates the object sent through the request
+* and creates a user object.
+* @method getUser
+* @param {string} usersEndpoint - https://myflix01025.herokuapp.com/users/:username
+* @param {Array} expressValidator - Validate form input using the express-validator package.
+* @param {func} callback - Uses Users schema to register user.
+ */
 app.get('/users/:username', passport.authenticate('jwt',{session:false}), (req, res) => {
   Users.findOne({ Username: req.params.username })
    .then((user) => {
@@ -210,7 +276,14 @@ app.get('/users/:username', passport.authenticate('jwt',{session:false}), (req, 
 });
 
 
-//Adding user a favourite movie
+/**
+* This method makes a call to the user's movies endpoint,
+* and pushes the movieID in the FavoriteMovies array.
+* @method addToFavorites
+* @param {string} userNameMoviesEndpoint - https://myflix01025.herokuapp.com/users/:username/movies/:movieID
+* @param {Array} expressValidator - Validate form input using the express-validator package.
+* @param {func} callback - Uses Users schema to add movieID to list of favorite movies.
+ */
 app.put('/users/:username/movies/:movieId', passport.authenticate('jwt', {session: false}), ( req, res ) =>{ 
   Users.findOneAndUpdate({ Username: req.params.username }, {
      $addToSet: { FavoriteMovies: req.params.movieId }
@@ -224,7 +297,14 @@ app.put('/users/:username/movies/:movieId', passport.authenticate('jwt', {sessio
     })
 });
 
-// Deleting username's favourite movie
+/**
+  * This method makes a call to the user's movies endpoint,
+  * and deletes the movieID from the FavoriteMovies array.
+  * @method removeFromFavorites
+  * @param {string} userNameMoviesEndpoint - https://myflix01025.herokuapp.com/users/:username/movies/:movieID
+  * @param {Array} expressValidator - Validate form input using the express-validator package.
+  * @param {func} callback - Uses Users schema to remove movieID from list of favorite movies.
+   */
 
 app.delete("/users/:username/movies/:movieId",passport.authenticate('jwt',{session:false}), (req, res) => {
     Users.findOneAndUpdate({Username: req.params.username},
@@ -248,7 +328,9 @@ app.delete("/users/:username/movies/:movieId",passport.authenticate('jwt',{sessi
     })
 })
 
-// Deleting a username
+/**
+ * DELETE request to delete a user (by username)
+ */
 app.delete('/users/:username',passport.authenticate('jwt',{session:false}), (req, res) => {
   Users.findOneAndRemove({ Username: req.params.username })
     .then((user) => {
