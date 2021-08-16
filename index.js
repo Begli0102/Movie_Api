@@ -28,7 +28,7 @@ let allowedOrigins = [
  'http://localhost:1234',
  'http://testsite.com',
  'http://myflix1.netlify.app',
- 'https://begli0102.github.io/myFlix-Angular-client/',
+ 'https://begli0102.github.io/myFlix-Angular-client',
  'http://localhost:4200'];
 
  app.use(cors({origin: (origin, callback) => {
