@@ -23,9 +23,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
-let allowedOrigins = ['http://localhost:8080','http://localhost:1234',
- 'http://testsite.com','myflix1.netlify.app',
- 'http://localhost:65346','http://localhost:4200'];
+let allowedOrigins = [
+ 'http://localhost:8080',
+ 'http://localhost:1234',
+ 'http://testsite.com',
+ 'myflix1.netlify.app',
+ 'https://begli0102.github.io/myFlix-Angular-client/',
+ 'http://localhost:4200'];
 
  app.use(cors({origin: (origin, callback) => {
     if(!origin) return callback(null, true);
