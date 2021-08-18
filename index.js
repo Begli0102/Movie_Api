@@ -23,27 +23,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
-let allowedOrigins = [
- 'http://localhost:8080',
- 'http://localhost:1234',
- 'http://testsite.com',
- 'http://myflix1.netlify.app',
- 'http://myflix1.netlify.app/',
- 'https://begli0102.github.io/myFlix-Angular-client/',
- 'http://localhost:4200',
- 'https://begli0102.github.io',
- 'https://begli0102.github.io/'];
 
- app.use(cors({origin: (origin, callback) => {
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-      return callback(new Error(message ), false);
-    }
-    return callback(null, true);
-  }
-}
-));
+
+ app.use(cors());
 
  require('./auth')(app);
 
