@@ -22,12 +22,12 @@ This is an API which provides users with access to information about movies, gen
 
 The API is built with a REST architecture. The business logic is modeled with Mongoose. It meets basic data security regulations and uses JWT-based authentication.
 
-- MongoDB
-- Express.js
-- Node.js
-- Mongoose
-- Heroku
-- NPM
+- [MongoDB](https://docs.mongodb.com/)
+- [Express.js](http://expressjs.com/)
+- [Node.js](https://nodejs.org/en/docs/)
+- [Mongoose](https://mongoosejs.com/docs/)
+- [Heroku](https://devcenter.heroku.com/categories/reference)
+- [NPM](https://docs.npmjs.com/)
 
 ## Authentication
 
