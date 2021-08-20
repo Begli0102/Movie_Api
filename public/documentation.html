@@ -1,171 +1,145 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
+
   <head>
     <meta charset="utf-8">
-    <title>Movie-API</title>
-    <link href="../css/styles.css" rel="stylesheet"  type="text/css">
+    <title>MoviesInfo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+}
+</style>
   </head>
+
   <body>
-    <h1>Documentation</h1>
+    FlixInfo <br><br>
 
-      <table>
-        <tr>
-          <th>Business Logic</th>
-          <th>Endpoint</th>
-          <th>HTTP method</th>
-          <th>Request</th>
-          <th>Request example</th>
-          <th>Responce</th>
-          <th>Response example</th>
-        </tr>
+    The web application will provide users with access to information about different
+    movies, directors, and genres. Users will be able to sign up, update their
+    personal information, and create a list of their favorite movies.
+    <br> <br>
 
-        <tr>
-          <th>Get a list of all movies</th>
-          <th>/movies</th>
-          <th>Get</th>
-          <th>None</th>
-          <th>None</th>
-          <th>JSON</th>
-          <th>
-            "Genre": {
-            "Name": "Science fiction",
-            "Description": "Science fiction is similar to fantasy, except stories in this genre use scientific understanding to explain the universe that it takes place in."
-        },
-        "Director": "Update Steven Allan Spielberg",
-        "Actors": [],
-        "_id": "606f2e137990af073a8a47b1",
-        "Title": "Jurassic Park",
-        "Description": "Update  It is an American science fiction media franchise centered on a disastrous attempt to create a theme park of cloned dinosaurs.",
-        "ImagePath": "https://www.imdb.com/title/tt0107290/mediaviewer/rm3913805824/",
-        "Featured": true
-       </th>
-        </tr>
-        <tr>
+    <table>
+  <tr>
+    <th>Request</th>
+    <th>URL</th>
+    <th>HTTP Method</th>
+    <th>URL parameters</th>
+    <th>Request body data format</th>
+    <th>Respond body data format</th>
+  </tr>
+  <tr>
+    <td>Get a list of ALL movies</td>
+    <td>/movies</td>
+    <td>GET</td>
+    <td></td>
+    <td>None</td>
+    <td>A JSON object holding data about all movies</td>
+  </tr>
+  <tr>
+    <td>Get data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title</td>
+    <td>/movies/[Title]</td>
+    <td>GET</td>
+    <td>/movies/:Title</td>
+    <td>None</td>
+    <td>A JSON object holding data about a single movie containing a title, description, genre, director, image and featured. <br><br>
+    Example: <br>
+    {
+    "Title":"The Grey",
+    "Description":"The story follows a number of oil-men stranded in Alaska after a plane crash, who must wage a war against multiple packs of Canadian Grey Wolves, hence the film’s title, stalking them amidst mercilessly cold weather.",
+    "Genre":{
+      "Name":"Survival",
+      "Description":" The survival is a film genre in which one or more characters make an effort at physical survival. It often overlaps with other film genres."},
+     }
+        <br></td>
+  </tr>
+  <tr>
+    <td>Get data about a movie genre by name</td>
+    <td>/movies/genres/[Genre]</td>
+    <td>GET</td>
+    <td>/movies/genres/:Genre</td>
+    <td>None</td>
+    <td>A JSON object holding data about the genre</td>
+  </tr>
+  <tr>
+    <td>Get data about a movie director by name</td>
+    <td>/movies/directors/[name]</td>
+    <td>GET</td>
+    <td>/movies/directors/:name</td>
+    <td>None</td>
+    <td>A JSON object holding data about the director</td>
+  </tr>
+  <tr>
+    <td>Register new user</td>
+    <td>/users</td>
+    <td>POST</td>
+    <td></td>
+    <td>A JSON object holding data about the user to create. <br> Example: <br> {
+  <br>ID: Integer,
+  <br>Username: String (required),
+  <br>Password: String (required),
+  <br>Email: String (required),
+  <br>Birthday: Date
+<br>}</td>
+    <td>A JSON object holding data about the user that was added.
+<br>Example: <br> { <br>
+    "_id": "607467938f1de1634b2326d4",<br>
+    "Username": "user",<br>
+    "Password": "password1",<br>
+    "Email": "user@gmail.com",<br>
+    "Birthday": "1992-08-23T00:00:00.000Z"<br>
+}</td>
+  </tr>
+  <tr>
+    <td>Update a user information</td>
+    <td>/users/[Username]</td>
+    <td>PUT</td>
+    <td>/users/:username</td>
+    <td>a JSON object holding data about the user to update. <br> Example: <br> charset="{
+"Username": "user",<br>
+"Password": <strong>"Password2"</strong>,<br>
+"Email": "user@gmail.com",<br>
+"Birthday" : "1992-08-23"<br>
+}"</td>
+    <td> a JSON object holding data about the user (including the updated data) <br> Example: <br> charset="{
+      "FavoriteMovies": [],<br>
+          "_id": "607467938f1de1634b2326d4",<br>
+          "Username": "user",<br>
+"Password": <strong>"Password2"</strong>,<br>
+"Email": "user@gmail.com",<br>
+"Birthday" : "1992-08-23"<br></td>
+  </tr>
+  <tr>
+    <td>Add a movie to Favourites </td>
+    <td>/users/[Username]/movies/[MovieID]</td>
+    <td>PUT</td>
+    <td>/users/:username/movies/:MovieID</td>
+    <td>None</td>
+    <td>A JSON object holding data about the movie that was added to the favourites Movie list. <br> Example:<br> { “title” : “The Gray"}</td>
+  </tr>
+  <tr>
+    <td>Remove movie from Favourites</td>
+    <td>/users/[Username]/movies/[MovieID]</td>
+    <td>DELETE</td>
+    <td>/users/:username/movies/:MovieID</td>
+    <td>None</td>
+    <td>A JSON object holding data about the updated favorite Movies list.</td>
+  </tr>
+  <tr>
+    <td>Unregister an existing user</td>
+    <td>/users/[Username]</td>
+    <td>DELETE</td>
+    <td>/users/:username</td>
+    <td>None</td>
+    <td>A text message indicating whether the user was successfully deleted</td>
+  </tr>
+</table>
 
-          <th>Return data by title</th>
-          <th>/movies/:title</th>
-          <th>Get</th>
-          <th>None</th>
-          <th>/movies/Lincoln</th>
-          <th>JSON</th>
-          <th>"Genre": {
-          "Name": "Science fiction",
-          "Description": "Science fiction is similar to fantasy, except stories in this genre use scientific understanding to explain the universe that it takes place in."
-      },
-      "Director": "Steven Allan Spielberg",
-      "Actors": [],
-      "_id": "606f2e137990af073a8a47b1",
-      "Title": "Jurassic Park",
-      "Description": "Update  It is an American science fiction media franchise centered on a disastrous attempt to create a theme park of cloned dinosaurs.",
-      "ImagePath": "https://www.imdb.com/title/tt0107290/mediaviewer/rm3913805824/",
-      "Featured": true
-      </th>
-        </tr>
-        <tr>
-          <th>Return data by genre</th>
-          <th>/genre/:Name</th>
-          <th>Get</th>
-          <th>None</th>
-          <th>/genre/:Crime</th>
-          <th>json</th>
-          <th> "Genre": {
-            "Name": "Science fiction",
-            "Description": "Science fiction is similar to fantasy, except stories in this genre use scientific understanding to explain the universe that it takes place in."
-            }
-          </th>
-        </tr>
-        <tr>
-          <th>Return data by it's director</th>
-          <th>/director/:Name</th>
-          <th>Get</th>
-          <th>None</th>
-          <th>/director/:Steven%20Allan%20Spielberg</th>
-          <th>JSON</th>
-          <th>"Director": {
-            "Name": "Steven Allan Spielberg",
-            "Bio": "Robert Jonathan Demme was an American director, producer, and screenwriter.",
-            "Birth": "1946-12-18"
-           }
-          </th>
-        </tr>
-
-      <tr>
-        <th>Allow to register a new user</th>
-        <th>/users</th>
-        <th>Post</th>
-        <th>JSON</th>
-        <th>
-        { "Username": "John Lee ",
-        "Password": "12345",
-        "Email": " johnlee@gmail.com"}
-       </th>
-        <th>JSON</th>
-        <th> {
-        "FavoriteMovies": [],
-        "_id": "606f45be7990af073a8a47bb",
-        "Username": "John Lee ",
-        "Password": "12345",
-        "Email": " johnlee@gmail.com",
-        "Birthday": "1980-10-10T00:00:00.000Z",
-        "FavouriteMovies": "[]"
-         }
-        </th>
-        </tr>
-
-          <tr>
-            <th>Allow users tu update their info</th>
-            <th>/users/:username</th>
-            <th>Put</th>
-            <th>JSON</th>
-            <th>
-            {"Username": "John Lee ",
-            "Password": "12345",
-            "Email": " johnlee@gmail.com"}
-           </th>
-            <th>JSON</th>
-            <th>{
-            "FavoriteMovies": [],
-            "_id": "606f45be7990af073a8a47bb",
-            "Username": "John Lee ",
-            "Password": "12345",
-            "Email": " johnlee@gmail.com",
-            "Birthday": "1980-10-10T00:00:00.000Z",
-            "FavouriteMovies": "[]"
-             }
-            </th>
-          </tr>
-
-
-        <tr>
-          <th>Allow users to add a movie to their favorites list</th>
-          <th>/users/:Username/Movies/:movieId</th>
-          <th>Post</th>
-          <th>None</th>
-          <th>users/John%20Lee/movies/606f2e137990af073a8a47b1</th>
-          <th>JSON</th>
-          <th>
-            { "FavoriteMovies": []}
-          </th>
-        </tr>
-
-        <tr>
-          <th>Allow users to remove a movie from their list of favorites</th>
-          <th>/users/:Username/movies/:title</th>
-          <th>Delete</th>
-          <th>None</th>
-          <th>/users/:John%20Lee/Movies/:Lincoln</th>
-          <th>Text</th>
-          <th>Favourite movie has benn deleted</th>
-        </tr>
-        <tr>
-          <th>Allow existing users to deregister</th>
-          <th>/users/:username</th>
-          <th>Delete</th>
-          <th>None</th>
-          <th>/users/:Begli%20Kakabalov</th>
-          <th>Test</th>
-          <th>Begli Kakabalov has been deregistered</th>
-        </tr>
-      </table>
   </body>
+
 </html>
