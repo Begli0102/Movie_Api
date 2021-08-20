@@ -1,7 +1,8 @@
+# Movie API
 
-# Overview
+## Overview
 
-This is an API which provides users with access to information about movies, genres and directors. Users are able to register/un-register, update their user profile, and create a list of their favorite movies.
+The Movie API serves as a backend for an application that allows users with access to information about movies, genres and directors. Users are able to register/un-register, update their user profile, and create a list of their favorite movies. All of these are saved in the database. This RESTful API is built with Node.js, Express.js and a MongoDB database.This is an API which provides users.
 
 ## Api Documentation
 [Fill free to check the endpoints](http://myflix01025.herokuapp.com/documentation.html)
