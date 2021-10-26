@@ -1,9 +1,9 @@
 const express = require('express');
-const morgan= require('morgan');
-const bodyParser=require('body-parser');
-const passport=require('passport');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const passport = require('passport');
 require('./passport');
-const cors=require('cors');
+const cors = require('cors');
 const { check, validationResult } = require('express-validator');
  require('dotenv').config();
 
@@ -13,7 +13,7 @@ const mongoose = require("mongoose");
 const Models = require('./models.js');
 
 
-const Movies= Models.Movie;
+const Movies = Models.Movie;
 const Users = Models.User;
 
  mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true });
